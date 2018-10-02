@@ -1,0 +1,53 @@
+    <div id="naveffect" class="overlay" onclick="closeNav()"></div>
+
+    <div id="header" class="header">
+        <div onclick="openNav()" class="hamburger"><img class="hamburger" src="images/menuwhite.png"></div>
+        <div class="homepagetitle">Go Out</div>
+        <div class="filter"><img class="filter" src="images/filter_icon.png"></div>
+    </div>
+
+
+    <div id="mySidenav" class="sidenav">
+        <a href="#" class="myprofile"><span>My Profile</span></a>
+        <a href="#" class="eventslist"><span>Events List</span></a>
+        <a href="#" class="eventcalender"><span>Event Calender</span></a>
+        <a href="#" class="myfavourites"><span>My Favourites</span></a>
+        <a href="#" class="settings"><span>Settings</span></a>
+    </div>
+    <div id="maincontent">
+        <div id="formscontainer">
+            <div id=addevent>
+                <form method="post" action="/addevent">
+                    <input type="text" name="eventName" placeholder="Event Name">
+                    <input type="text" name="address" placeholder="Address">
+                    <input type="number" name="maxPeople" placeholder="Max People">
+                    <input type="number" name="cost" placeholder="Cost">
+                    <input type="text" name="requirements" placeholder="Requirements">
+                    <input type="checkbox" name="publicPrivate" placeholder="Public or Private?">
+                    <input type="text" name="people" placeholder="Who's coming?">
+                    <input type="time" name="time" placeholder="What time?">
+                    <input type="date" name="date" placeholder="What date?">
+                    <button type="submit">Add the event!</button>
+                </form>
+            </div>
+        </div>
+        <div id="footer">
+            <nav>
+                <a class="home" href="index.html">
+                    <img src="images/homeicontest.svg">
+                </a>
+                <a class="search" href="">  
+                    <img src="images/searchicontest.svg">
+                </a>
+                <a class="plus" href="addeventform.html">
+                    <img src="images/plusicontest.svg">
+                </a>
+                <a class="friends" href="">
+                    <img src="images/homeicontest.svg">
+                </a>
+                <a class="message" href="">
+                    <img src="images/homeicontest.svg">
+                </a>
+            </nav>
+
+        </div>

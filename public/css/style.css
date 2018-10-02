@@ -1,0 +1,222 @@
+html {
+    font-family: coolvetica;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 50%;
+    grid-column-gap: 2%;
+    background-color: #005555;
+    width: 100%;
+}
+
+.hamburger {
+    height: 100%;
+    justify-self: center;
+    align-self: center;
+}
+
+.filter {
+    height: 100%;
+    justify-self: center;
+    align-self: center;
+}
+
+body {
+    background-color: white;
+    margin: 0;
+    transition: background-color .5s;
+}
+
+/* The side navigation menu */
+
+.sidenav {
+    height: 100%;
+    /* 100% Full-height */
+    width: 0;
+    /* 0 width - change this with JavaScript */
+    position: fixed;
+    /* Stay in place */
+    z-index: 10;
+    /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #111;
+    /* Black*/
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+    transition: 0.5s;
+    /* 0.5 second transition effect to slide in the sidenav */
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-content: center;
+}
+
+/* The navigation menu links */
+
+.sidenav a {
+    text-decoration: none;
+    font-size: 55;
+    color: white;
+    transition: 0.3s;
+    font-family: Coolvetica;
+    height: 100%;
+    width: 100%;
+}
+
+.myprofile {
+    background-color: #003333;
+}
+
+.eventslist {
+    background-color: #004444;
+}
+
+.eventcalender {
+    background-color: #005555;
+}
+
+.myfavourites {
+    background-color: #006666;
+}
+
+.settings {
+    background-color: #007777;
+}
+
+span {
+    grid-column-start: 2;
+}
+
+.myprofile,
+.eventslist,
+.eventcalender,
+.myfavourites,
+.settings {
+    text-align: center;
+    display: inline-grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#footer img {
+    width: 80px;
+}
+
+.homepagetitle {
+    font-size: 100px;
+    text-align: center;
+    color: white;
+    justify-self: center;
+    align-self: center;
+}
+
+#footer nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    top: 90%;
+    background-color: #005555;
+}
+
+html {
+    font-family: coolvetica;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    font-family: coolvetica;
+    background-color: deepskyblue;
+    border: none;
+    color: white;
+    padding: 1.5% 15%;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 24px;
+    margin-top: 2%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#signUp {
+    display: none;
+}
+
+.logIn {
+    color: deepskyblue;
+    left: 70%;
+}
+
+.signUp {
+    left: 30%;
+    color: white;
+}
+
+input {
+    display: block;
+    border: none;
+    border-bottom: 2px solid #d6d6d6;
+    text-align: center;
+    padding-top: 2%;
+    padding-bottom: 3%;
+    font-family: coolvetica;
+    font-size: 40px;
+    width: 40%;
+    margin: auto;
+}
+
+.signUp,
+.logIn {
+    font-size: 80px;
+    position: absolute;
+    top: 80%;
+    transform: translate(-50%, -50%);
+}
+
+.headercontainer {
+    position: relative;
+    text-align: center;
+}
+
+.logintitle {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    color: white;
+    font-size: 180px;
+}
+
+.mountainimg {
+    width: 100%;
+}
