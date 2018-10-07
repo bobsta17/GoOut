@@ -26,13 +26,9 @@
         </div>
     </div>
 -->
-{{#if user includeZero=true}}
-    <h2>Hello, {{ user.username }}</h2>
-{{else}}
     <h3>Please Login</h3>
     <a href="/auth/facebook">Facebook Login</a><br>
-    <a href="/addaccount">Create Account With Us</a>
-{{/if}}
+    <a href="/addAccount">Create Account With Us</a>
 <form method="post" action="/login">
     <input type="email" name="email" placeholder="Email">
     <input type="password" name="password" placeholder="Password">

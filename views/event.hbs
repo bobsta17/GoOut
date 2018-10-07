@@ -15,21 +15,17 @@
         <a href="/settings" class="settings"><span>Settings</span></a>
     </div>
     <div id="maincontent">
-        {{#each event}}
-            <a href='/event/{{this.eventInfo._id}}'>
             <div>
-                Event Name: {{this.eventInfo.eventName}}<br>
-                Address: {{this.eventInfo.address}}<br>
-                Date: {{this.eventInfo.date}}<br>
-                Requirements: {{this.eventInfo.requirements}}<br>
-                Cost: {{this.eventInfo.cost}}<br>
-                Max People: {{this.eventInfo.maxPeople}}<br>
-                {{#if this.eventInfo.private}}Private<br>{{/if}}
-                Time: {{this.eventInfo.time}}<br>
-                Going?: {{this.going}}
+                Event Name: {{eventName}}<br>
+                Address: {{address}}<br>
+                Date: {{date}}<br>
+                Requirements: {{requirements}}<br>
+                Cost: {{cost}}<br>
+                Max People: {{maxPeople}}<br>
+                {{#if private}}Private<br>{{/if}}
+                Time: {{time}}<br>
+                <a href='/'>Home Page</a>
             </div>
-        </a>
-        {{/each}}
     </div>
     <div id="footer">
         <nav>
