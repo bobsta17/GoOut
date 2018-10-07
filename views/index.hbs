@@ -1,9 +1,9 @@
     <div id="naveffect" class="overlay" onclick="closeNav()"></div>
 
     <div id="header" class="header">
-        <div onclick="openNav()" class="hamburger"><img class="hamburger" src="images/menuwhite.png"></div>
+        <div onclick="openNav()" class="hamburger"><img class="hamburger" src="/images/menuwhite.png"></div>
         <div class="homepagetitle">Go Out</div>
-        <div class="filter"><img class="filter" src="images/filter_icon.png"></div>
+        <div class="filter"><img class="filter" src="/images/filter_icon.png"></div>
     </div>
 
 
@@ -18,6 +18,7 @@
         {{#each event}}
             <a href='/event/{{this.eventInfo._id}}'>
             <div>
+                <br>
                 Event Name: {{this.eventInfo.eventName}}<br>
                 Address: {{this.eventInfo.address}}<br>
                 Date: {{this.eventInfo.date}}<br>
@@ -27,6 +28,7 @@
                 {{#if this.eventInfo.private}}Private<br>{{/if}}
                 Time: {{this.eventInfo.time}}<br>
                 Going?: {{this.going}}
+                <br>
             </div>
         </a>
         {{/each}}
@@ -34,19 +36,19 @@
     <div id="footer">
         <nav>
             <a class="home" href="/">
-                    <img src="images/homeicontest.svg">
+                    <img src="/images/homeicontest.svg">
                 </a>
             <a class="search" href="/search">  
-                    <img src="images/searchicontest.svg">
+                    <img src="/images/searchicontest.svg">
                 </a>
             <a class="plus" href="/addEvent">
-                    <img src="images/plusicontest.svg">
+                    <img src="/images/plusicontest.svg">
                 </a>
             <a class="friends" href="/friends">
-                    <img src="images/homeicontest.svg">
+                    <img src="/images/homeicontest.svg">
                 </a>
             <a class="message" href="/messages">
-                    <img src="images/homeicontest.svg">
+                    <img src="/images/homeicontest.svg">
                 </a>
         </nav>
 

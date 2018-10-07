@@ -44,6 +44,7 @@ function getEvent(eventID, callback) {
         var collection = db.collection('Event');
         collection.findOne({_id: new mongo.ObjectID(eventID)}, function(err, result) {
             if(err) throw err;
+            client.close();
             callback(result);
         });
     });
@@ -54,6 +55,10 @@ router.get('/', isAuthenticated, function(req, res){
         res.render('index', {event: events});
     })
 });
+
+router.get('/test/:item', isAuthenticated, function(req,res) {
+    res.render('index');
+})
 
 router.get('/event/:eventID', isAuthenticated, function(req,res) {
     getEvent(req.params.eventID,function(event) {
