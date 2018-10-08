@@ -35,7 +35,7 @@ function getEvents(user, callback) {
             }
         });
     });
-} 
+}
 
 function getEvent(eventID, callback) {
     MongoClient.connect(url, function(err, client) {
@@ -53,7 +53,7 @@ function getEvent(eventID, callback) {
 router.get('/', isAuthenticated, function(req, res){
     getEvents(req.user, function(events) {
         res.render('index', {event: events});
-    })
+    });
 });
 
 router.get('/test/:item', isAuthenticated, function(req,res) {
