@@ -13,6 +13,18 @@ function isAuthenticated(req,res,next){
         res.redirect('/login');
 }
 
+function getAttendance(query,callback) {
+    MongoClient.connect(url, function(err, client) {
+        const db = client.db(dbName);
+        var collection = db.collection('Attendance');
+        collection.find(query).toArray(function(err, result) {
+            if(err) throw err;
+            client.close();
+            callback(result);
+        });
+    });
+}
+                     
 function getEvents(user, callback) {
     MongoClient.connect(url, function(err, client) {
         var events=[];
@@ -39,7 +51,6 @@ function getEvents(user, callback) {
 
 function getEvent(eventID, callback) {
     MongoClient.connect(url, function(err, client) {
-        console.log("Finding event")
         const db = client.db(dbName);
         var collection = db.collection('Event');
         collection.findOne({_id: new mongo.ObjectID(eventID)}, function(err, result) {
@@ -50,15 +61,21 @@ function getEvent(eventID, callback) {
     });
 }
 
-router.get('/', isAuthenticated, function(req, res){
-    getEvents(req.user, function(events) {
-        res.render('index', {event: events});
-    });
+router.get('/social', isAuthenticated, function(req,res) {
+    res.render('social');
 });
 
-router.get('/test/:item', isAuthenticated, function(req,res) {
-    res.render('index');
-})
+router.get('/friends', isAuthenticated, function(req,res) {
+    res.render('friends');
+});
+
+router.get('/', isAuthenticated, function(req, res){
+    console.log(1);
+    getEvents(req.user, function(events) {
+        res.render('index', {event: events});
+        console.log(2);
+    });
+});
 
 router.get('/event/:eventID', isAuthenticated, function(req,res) {
     getEvent(req.params.eventID,function(event) {
