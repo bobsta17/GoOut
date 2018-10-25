@@ -25,6 +25,13 @@
                     <input type="text" name="requirements" placeholder="Requirements">
                     Private?<input type="checkbox" name = "private" placeholder = "Private?">
                     <input type="text" name = "description" placeholder = "Description">
+                    {{#if friends}}
+                    <select name="invitedFriends" multiple>
+                        {{#each friends}}
+                        <option value="{{this._id}}">{{this.firstName}} {{first.lastName}}</option>
+                        {{/each}}
+                    </select>
+                    {{/if}}
                     <input type="text" name="people" placeholder="Who's coming?">
                     <input type="time" name="time" placeholder="What time?">
                     <input type="date" name="date" placeholder="What date?">
@@ -32,9 +39,10 @@
                 </form>
             </div>
         </div>
+    </div>
         <div id="footer">
             <nav>
-                <a class="home" href="index.html">
+                <a class="home" href="/">
                     <img src="images/homeicontest.svg">
                 </a>
                 <a class="search" href="">  

@@ -34,18 +34,43 @@ function getEvents(user, callback) {
             if(err) throw err;
             collection = db.collection('Event');
             var counter = 0;
-            for(var i=0;i<result.length;i++) {
-                events.push({going:result[i].going,eventInfo: {}});
-                collection.findOne({_id: new mongo.ObjectID(result[i].event_id)}, function(err, eventResult) {
-                    events[counter].eventInfo = eventResult;
-                    counter++;
-                    if(counter == result.length) {
-                        client.close();
-                        callback(events);
-                    }
-                });
+            if(result[0]==undefined) {
+                callback(events);
+            }
+            else {
+                for(var i=0;i<result.length;i++) {
+                    events.push({going:result[i].going,eventInfo: {}});
+                    collection.findOne({_id: new mongo.ObjectID(result[i].event_id)}, function(err, eventResult) {
+                        events[counter].eventInfo = eventResult;
+                        counter++;
+                        if(counter == result.length) {
+                            client.close();
+                            callback(events);
+                        }
+                    });
+                }
             }
         });
+    });
+}
+
+function getFriends(friends, callback) {
+    MongoClient.connect(url, function(err, client) {
+        const db = client.db(dbName);
+        var friendsUpdated=[];
+        var counter = 0;
+        var collection = db.collection('User');
+        for(var i=0;i<friends.length;i++) {
+            collection.findOne({_id: new mongo.ObjectID(friends[i])}, function(err, result) {
+                if(err) throw err;
+                friendsUpdated[counter] = result;
+                counter++;
+                if(counter==friends.length) {
+                    client.close();
+                    callback(friendsUpdated);
+                } 
+            });
+        }
     });
 }
 
@@ -61,6 +86,37 @@ function getEvent(eventID, callback) {
     });
 }
 
+function getUserPage(userID, callback) {
+    MongoClient.connect(url, function(err, client) {
+        const db = client.db(dbName);
+        var collection = db.collection('User');
+        collection.findOne({_id: new mongo.ObjectID(userID)}, function(err, result) {
+            if(err) throw err;
+            client.close();
+            getEvents(result, function(events) {
+                if(result.friends) {
+                    getFriends(result.friends, function(friends) {
+                        result.friends = friends;
+                        callback(events, result);
+                    });
+                } else {
+                    callback(events, result);
+                }
+            });
+        });
+    });
+}
+
+function addFriendTest(friendList,userID,callback) {
+    console.log("Running function");
+    for(var i=0;i<friendList.length;i++) {
+        if(userID==friendList[i]) {
+            console.log("Already Friends")
+            callback(false);
+        } else callback(true);
+    }
+}
+
 router.get('/social', isAuthenticated, function(req,res) {
     res.render('social');
 });
@@ -69,19 +125,65 @@ router.get('/friends', isAuthenticated, function(req,res) {
     res.render('friends');
 });
 
+router.get('/search', isAuthenticated, function(req,res) {
+    res.render('search');
+})
+
+router.post('/search', isAuthenticated, function(req,res) {
+    MongoClient.connect(url, function(err, client) {
+        var queryType = req.body.queryType;
+        var query = req.body.query.split(' ');
+        var actualQuery = [];
+        const db = client.db(dbName);
+        var collection = db.collection(queryType);
+        if(queryType == 'User') {
+            for(var i=0;i<query.length;i++) {
+                actualQuery.push({$or: [{firstName: new RegExp(query[i],'i')},{lastName:  new RegExp(query[i],'i')}]});
+            }
+        }
+        else if(queryType=='Event') {
+            for(var i=0;i<query.length;i++) {
+                actualQuery.push({$or: [{eventName: new RegExp(query[i],'i')},{address:  new RegExp(query[i],'i')}]});
+            }
+        }
+        collection.find({$or: actualQuery}).toArray(function(err,result) {
+            client.close();
+            res.render('search',{result: result});
+        });
+    });
+});
+
 router.get('/', isAuthenticated, function(req, res){
-    console.log(1);
     getEvents(req.user, function(events) {
         res.render('index', {event: events});
-        console.log(2);
     });
 });
 
 router.get('/event/:eventID', isAuthenticated, function(req,res) {
     getEvent(req.params.eventID,function(event) {
-        console.log("rendering");
         res.render('event', event);
     })
+});
+
+router.get('/user/:userID', isAuthenticated, function(req,res) {
+    getUserPage(req.params.userID,function(events, user) {
+        if(user._id.equals(req.user._id)) {
+            console.log("Nope 1");
+            res.render('user', {user:user,event:events});
+        }
+        else if(req.user.friends) {
+            addFriendTest(req.user.friends,req.params.userID, function(addFriendBoolean) {
+                console.log(addFriendBoolean);
+                if(addFriendBoolean) {
+                    console.log("Yep");
+                    res.render('user', {user:user,event:events,addFriend: true});
+                } else {
+                    console.log("Nope 2");
+                    res.render('user', {user:user,event:events});
+                }
+            });
+        } else res.render('user', {user:user,event:events,addFriend: true});
+    });
 });
 
 router.get('/login', function(req,res) {
@@ -93,7 +195,7 @@ router.get('/addAccount', function(req,res) {
 });
 
 router.get('/addEvent', isAuthenticated, function(req,res) {
-    res.render('addEvent');
+    res.render('addEvent',req.user);
 });
 
 router.post('/addEvent',isAuthenticated, function(req,res) {
@@ -133,6 +235,7 @@ router.post('/addEvent',isAuthenticated, function(req,res) {
 });
 
 router.post('/addAccount', function(req,res) {
+    console.log(req.body);
     MongoClient.connect(url, function(err, client) {
         const db = client.db(dbName);
         const collection = db.collection('User');
